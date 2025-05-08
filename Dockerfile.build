@@ -1,0 +1,11 @@
+# Use a Java image with Maven pre-installed
+FROM maven:3.9.4-eclipse-temurin-17-alpine
+
+# Set work directory inside container
+WORKDIR /app
+
+# Copy your source code and pom.xml
+COPY . .
+
+# Run unit tests
+CMD ["mvn", "clean", "install"]
