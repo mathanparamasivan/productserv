@@ -1,0 +1,18 @@
+# Use Maven with Java 17 (Alpine = lightweight)
+FROM maven:3.9.4-eclipse-temurin-17-alpine
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy your project files into the container
+COPY . .
+
+# Optional: set env vars for Sonar (can override with -e in docker run)
+ENV SONAR_HOST_URL=http://host.docker.internal:9000
+ENV SONAR_TOKEN=sqa_30915d7f11d3952cfe00aabc73843a4d1945be75
+
+# Run Sonar analysis
+CMD ["mvn", "clean", "verify", "sonar:sonar",
+     "-Dsonar.projectKey=productserv",
+     "-Dsonar.host.url=$SONAR_HOST_URL",
+     "-Dsonar.login=$SONAR_TOKEN"]
